@@ -2,7 +2,12 @@
 name = "elifim"
 version = "0.1.0"
 edition = "2021"
+description = "Evolution simulation of agents with neural networks"
+readme = "README.md"
+repository = "https://github.com/GiftofHermes/elifim"
 license = "Apache-2.0"
+keywords = ["simulation", "evolution", "agent"]
+categories = ["simulation"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
