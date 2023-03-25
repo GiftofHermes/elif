@@ -1,3 +1,6 @@
+# does not make sense to put in git
+assets/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -132,3 +135,4 @@ dmypy.json
 # Added by cargo
 
 /target
+
