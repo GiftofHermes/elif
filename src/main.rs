@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy::sprite::MaterialMesh2dBundle;
 use bevy::window::PrimaryWindow;
 
 fn main() { 
@@ -16,32 +17,26 @@ pub struct Pleb {}
 
 pub fn spawn_plebs(
     mut commands: Commands,
-    window_query: Query<&Window, With<PrimaryWindow>>,
-    asset_server: Res<AssetServer>,
-) { 
-    let window = window_query.get_single().expect("Bevy should provide a main window");
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<ColorMaterial>>,
 
-    commands.spawn(
-        (SpriteBundle { 
-            transform: Transform::from_xyz(window.width() / 2.0, window.height() / 2.0, 1.0),
-            texture: asset_server.load("sprites/pleb.png"),
+) { 
+    for i in 0..10 { 
+        commands.spawn((MaterialMesh2dBundle {
+            mesh: meshes.add(shape::Circle::new(10.).into()).into(),
+            material: materials.add(ColorMaterial::from(Color::PURPLE)),
+            transform: Transform::from_translation(Vec3::new(-150. + (i as f32) * 20., 0., 0.)),
             ..default()
-        }, 
-        Pleb {},
-    )
-    );
+            },
+            Pleb {},
+        )
+        );
+    }
+    
 }
 
 pub fn spawn_camera(
     mut commands: Commands,
-    window_query: Query<&Window, With<PrimaryWindow>>
 ) { 
-    let window = window_query.get_single().expect("Bevy should provide a main window");
-
-    commands.spawn(
-    Camera2dBundle {     
-        transform: Transform::from_xyz(window.width() / 2.0, window.height() / 2.0, 1.0),
-        ..default()
-        }
-    );
+    commands.spawn(Camera2dBundle::default());
 }
