@@ -14,6 +14,7 @@ categories = ["simulation"]
 [dependencies]
 bevy = "0.11"
 fixedbitset = "0.4.2"
+rand = "0.8.5"
 
 # Enable max optimizations for dependencies, but not for our code:
 [profile.dev.package."*"]

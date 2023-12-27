@@ -1,12 +1,14 @@
 use bevy::prelude::*;
 use bevy::sprite::MaterialMesh2dBundle;
 use fixedbitset::FixedBitSet;
+use rand;
+use crate::actions;
 use crate::actions::{Action, CardinalDirection};
 
 #[derive(Component)]
 pub struct Pleb {
     gene: FixedBitSet,
-    energy: u8,
+    pub energy: u16,
     network: NeuralNetwork
 }
 
@@ -15,7 +17,7 @@ impl Pleb  {
         Pleb { 
             network: NeuralNetwork::new(&gene),
             gene: gene, 
-            energy: 100,
+            energy: 1000,
          }
     }
 
@@ -39,7 +41,8 @@ impl NeuralNetwork {
 
     fn compute(&self) -> Action { 
         // TODO: compute with an actual neural network
-        Action::Walk(CardinalDirection::North)
+        let action: Action = Action::Walk(rand::random::<CardinalDirection>());
+        action
     }
 }
 
@@ -86,14 +89,14 @@ fn kill_plebs(
  }
 
  fn act(
-    mut query: Query<(&mut Transform, &Pleb)>
+    mut query: Query<(&mut Transform, &mut Pleb)>
  ) {
-    for (mut transform, pleb) in query.iter_mut() { 
+    for (mut transform, mut pleb) in query.iter_mut() { 
         let action = pleb.network.compute();
 
         match action { 
             Action::Walk(direction) => {
-                transform.translation += direction.to_velocity();
+                actions::walk(&mut transform, &mut pleb, direction)
             }
             Action::Stay => { 
 
